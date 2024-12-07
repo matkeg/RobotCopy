@@ -1,6 +1,11 @@
 # RobotCopy
 A college project written in Python which handles folder backups using the Windows **robocopy** command. 
 
+## Uses
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio">
+</p>
+
 
 ## Requirements - For Development
 
