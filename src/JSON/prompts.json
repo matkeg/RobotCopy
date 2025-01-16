@@ -1,0 +1,20 @@
+{
+  "err_no_drive": "No drives detected. Please ensure at least one drive is connected and accessible and refresh the view.",
+
+  "warn_no_partition": "You have only one disk partition.<br/>Add at least one more disk partition or add an additional storage device to your PC in order to continue.",
+    
+  "info_same_partition": "One or more backups have the source and destination in the same partition.<br/>Modify the backups so that they use different partitions to avoid potential conflicts and problems.",
+  "info_removable_drive": "Removing this, currently selected, drive during an ongoing backup process might interrupt file transfers, cause errors, or result in data corruption.",
+
+  "rs": {
+    "err_no_drive": "Nema detektovanih drajvova. Molimo vas da osigurate da je barem jedan drajv povezan i dostupan, pa zatim osvežite prikaz.",
+
+    "warn_no_partition": "Imate samo jednu disk particiju.<br/>Dodajte barem još jednu particiju ili dodajte dodatni uređaj za skladištenje na vašem računaru kako biste nastavili.",
+    
+    "info_same_partition": "Jedan ili više bekapova imaju izvor i odredište na istoj particiji.<br/>Izmenite bekapove tako da koriste različite particije kako biste izbegli potencijalne konflikte i probleme.",
+    "info_removable_drive": "Uklanjanje ovog drajva tokom procesa bekapovanja može prekinuti prenose fajlova, izazvati greške ili dovesti do korupcije podataka."
+  }
+
+}
+
+  
