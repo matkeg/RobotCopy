@@ -25,11 +25,10 @@ def getRegisteredBackups() -> List[BackupScheduleData]:
     try:
         backups_folder = get_storage_folder_path(StorageFolder.BACKUPS)
         for filename in os.listdir(backups_folder):
-            if filename.endswith(".rcbe"):
-                file_path = os.path.join(backups_folder, filename)
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    backup_data = json.load(f)
-                    backups.append(BackupScheduleData.from_dict(backup_data))
+            file_path = os.path.join(backups_folder, filename)
+            with open(file_path, 'r', encoding='utf-8') as f:
+                backup_data = json.load(f)
+                backups.append(BackupScheduleData.from_dict(backup_data))
     except Exception as e:
         error(f"Error fetching registered backups: {e}", "getRegisteredBackups Error")
     return backups
