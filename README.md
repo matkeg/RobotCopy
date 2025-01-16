@@ -27,7 +27,7 @@ PyQt5, psutil, pywin32, wmi, pyudev
 ---
 
 ## Setup - Software Use
-Either download the `.exe` from the Releases section or download the whole source as a ZIP file, extract it and run the <kbd>main.py</kbd> file.
+<strike>Either download the `.exe` from the Releases section</strike> or download the whole source as a ZIP file, extract it and run the <kbd>main.py</kbd> file.
 
 ## Setup - Development Use
 In order to make changes to this program, make sure to download any missing software from the *Requirements - For Development* list and preferably using Visual Studio Code, open the folder.
