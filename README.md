@@ -21,9 +21,6 @@ Python Installation, PyQt5, psutil, pywin32
 ### Required Modules
 PyQt5, psutil, pywin32, wmi, pyudev
 
-### Code Documentation
-Sphinx
-
 ## Requirements - Software Use
 - Windows 10 and 11, potentially down to Windows Vista.
 
