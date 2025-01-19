@@ -125,19 +125,20 @@ def populateBackupRegistryView(mainWindow: QMainWindow, treeWidget: QTreeWidget)
             newTreeEntry.setData(0, 32, entry)
             newTreeEntry.setIcon(0, QIcon("src/Interface/Icons/Folders/linked.ico"))
 
-    def updateStatus(message: str):
-        """Updates the status label with the current operation."""
-        setUnsecureText(mainWindow, "statusText", message)
-        findObject(mainWindow, "statusLabel").show()
+    # Currently not used.
+    #def updateStatus(message: str):
+    #    """Updates the status label with the current operation."""
+    #    setUnsecureText(mainWindow, "statusText", message)
+    #    findObject(mainWindow, "statusLabel").show()
 
     def onPopulationFinished():
         """Cleanup after population is complete."""
-        findObject(mainWindow, "statusLabel").hide()
+        #findObject(mainWindow, "statusLabel").hide()
         worker.deleteLater()
 
     # Create and set up the worker thread
     worker = BackupRegistryPopulationWorker()
-    worker.status_update.connect(updateStatus)
+    #worker.status_update.connect(updateStatus)
     worker.backup_data.connect(updateTreeView)
     worker.finished.connect(onPopulationFinished)
     
