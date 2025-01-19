@@ -8,7 +8,7 @@ A college project written in Python which handles folder backups using the Windo
 
 ## Uses
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio" alt="Tech stack: Qt, Python, Visual Studio">
+  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio" alt="Qt, Python, Visual Studio">
 </p>
 
 ## Requirements
