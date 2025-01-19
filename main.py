@@ -49,13 +49,13 @@ class MainWindow(QMainWindow):
         self.drive_tree: QTreeWidget = findObject(self, "DriveTree")
         self.backup_tree: QTreeWidget = findObject(self, "BackupsTree")
         
+        self.backup_tree.itemSelectionChanged.connect(self.handle_backup_selection)
+
         # Set-up the backup registry view, button logic.
         self.actionsBackups: QListWidget = findObject(self, "actionsBackups")
         self.actionsSelection: QListWidget = findObject(self, "actionsSelection")
 
-        self.actionsBackups.itemDoubleClicked.connect(self.on_backup_action_clicked)
         self.actionsBackups.itemActivated.connect(self.on_backup_action_clicked)
-        self.actionsSelection.itemDoubleClicked.connect(self.on_selection_action_clicked)
         self.actionsSelection.itemActivated.connect(self.on_selection_action_clicked)
         self.actionsBackups.setDragDropMode(QAbstractItemView.NoDragDrop)
         self.actionsSelection.setDragDropMode(QAbstractItemView.NoDragDrop)
@@ -90,10 +90,26 @@ class MainWindow(QMainWindow):
         self.windows["about"] = AboutWindow()    
 
     def showBackupScheduler(self):
-        self.windows["backup_setup"] = BackupSetupWindow(BackupSetupAction.REGISTER)
+        self.windows["backup_setup"] = BackupSetupWindow(
+            BackupSetupAction.REGISTER,
+            callback=populateBackupRegistryView,
+            callbackArgs=[self, self.backup_tree]
+        )
 
     def showOneTimeBackup(self):
-        self.windows["backup_setup_once"] = BackupSetupWindow(BackupSetupAction.SETUP_ONE_TIME)
+        self.windows["backup_setup_once"] = BackupSetupWindow(
+            BackupSetupAction.SETUP_ONE_TIME,
+            callback=populateBackupRegistryView,
+            callbackArgs=[self, self.backup_tree]
+        )
+
+    def showBackupEditor(self, existingData: BackupScheduleData):
+        self.windows["backup_edit"] = BackupSetupWindow(
+            BackupSetupAction.EDIT,
+            existingData,
+            callback=populateBackupRegistryView,
+            callbackArgs=[self, self.backup_tree]
+        )
 
     # View refreshing logic.
     def switchView(self):
@@ -116,8 +132,50 @@ class MainWindow(QMainWindow):
             item.setSelected(False)
 
     def on_selection_action_clicked(self, item):
-        # Handle the selection action click event
-        print(f"Selection action clicked: {item.text()}")
+        # Handle the selection action double-click event
+        if item.isSelected():
+            # Get the selected item from the backup tree
+            selected_items = self.backup_tree.selectedItems()
+            if not selected_items:
+                return
+
+            selected_item = selected_items[0]
+            backup_data = selected_item.data(0, 32)
+
+
+            # Check if we have a valid BackupScheduleData
+            if not isinstance(backup_data, BackupScheduleData):
+                return
+
+            index = self.actionsSelection.row(item)
+            if index == 0:
+                info(
+                    "Backup manual triggering not yet implemented.", 
+                    "Not Implemented"
+                )
+            elif index == 1:
+                self.showBackupEditor(backup_data)
+            elif index == 2:
+                info(
+                    "Backup toggling not yet implemented.", 
+                    "Not Implemented"
+                )
+        
+            elif index == 3:
+                remove_result = ask(
+                    "Are you sure you want to remove the selected backup?",
+                    "Remove Backup",
+                    AskAnswer.YES_NO
+                )
+
+                if remove_result == True:
+                    remove_backup_data(backup_data.backup_id)
+                    populateBackupRegistryView(self, self.backup_tree)
+                else:
+                    return
+
+            # Unselect the item
+            item.setSelected(False)
 
     # Tab resizing logic.
     def on_tab_double_clicked(self):
@@ -138,10 +196,8 @@ class MainWindow(QMainWindow):
 # ------------------------------------------------------------------------------------ #
 
 if __name__ == "__main__":
-    print(BackupTriggerType.STARTUP == 1)
     app = QApplication([])
     app.setStyle("Fusion")
     mainWindow = MainWindow()
-    mainWindow.backup_tree.itemSelectionChanged.connect(mainWindow.handle_backup_selection)
     
     app.exec_()

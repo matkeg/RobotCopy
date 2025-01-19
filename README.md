@@ -1,9 +1,14 @@
-# RobotCopy
-A college project written in Python which handles folder backups using the Windows **robocopy** command. 
+<h1>
+  <p align="center">
+      <img src="src/Interface/Identity/banner.png" alt="RobotCopy Logo" width="512"/>
+  </p>
+</h1>
+  
+A college project written in Python which handles folder backups using the Windows **robocopy** command.
 
 ## Uses
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio" alt="Tech stack: Qt, Python, Visual Studio">
+  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio" alt="Qt, Python, Visual Studio">
 </p>
 
 ## Requirements

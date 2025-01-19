@@ -13,6 +13,7 @@ import datetime
 from src.Modules.QtUtils import *
 from src.Features.fetcher import *
 from src.Modules.FileSystemUtils import *
+from src.Modules.AppDataLogic import *
 
 # ------------------------------------------------------------------------------------ #
 
@@ -27,22 +28,48 @@ class BackupSetupAction:
 # NUMBERS CORESPOND TO THEIR COMBOBOX'S INDEX, CHANGING THE ORDER OF THE COMBOBOX ITEMS
 # OR CHANGING THE VALUES IN THESE CLASSES COULD LEAD TO UNEXPECTED PROGRAM BEHAVIOR. 
 
-class BackupTriggerType:
+class BackupTriggerType():
     """Specifies the scenario when the backup is initiated."""
     NEVER = 0
     STARTUP = 1
     SCHEDULED = 2
     USER_LOGON = 3
 
-class RecurrenceType:
+    @staticmethod
+    def represent(value) -> str:
+        values = {
+            0: "Never",
+            1: "Startup",
+            2: "Scheduled",
+            3: "User Logon"
+        }
+        return values.get(value, "-")
+
+class RecurrenceType():
     """Specifies whether the backup occurs once or repeats."""
     RECURRING = 0
     SINGLE = 1
 
-class RecurrenceStepUnit:
+    @staticmethod
+    def represent(value) -> str:
+        values = {
+            0: "Recurring",
+            1: "Once"
+        }
+        return values.get(value, "-")
+
+class RecurrenceStepUnit():
     """Specifies the unit for recurring steps."""
     DAYS = 0
     WEEKS = 1
+
+    @staticmethod
+    def represent(value) -> str:
+        values = {
+            0: "Days",
+            1: "Weeks"
+        }
+        return values.get(value, "-")
 
 class BackupStartTime:
     """Represents the starting time for a backup."""
@@ -71,6 +98,14 @@ class BackupStartTime:
             f"friendly_date_time -> {QDateTime.fromSecsSinceEpoch(self.timestamp).toString('MM-dd-yyyy HH:mm:ss')}"
             f")"
         )
+    
+    @staticmethod
+    def represent(value: Optional['BackupStartTime']) -> str:
+        """Returns a user-facing representation of this class."""
+        if value is None or value.get_unix_time() == 0:
+            return "ASAP"
+        else:
+            return value.get_qdatetime().toString('M/d/yyyy h:mm AP')
 
 class DaysOfWeek:
     """Represents a collection of days of the week."""
@@ -122,6 +157,18 @@ class DaysOfWeek:
         """Returns the days as a sorted list."""
         return sorted(self.days)
 
+    @staticmethod
+    def represent(value: Optional['DaysOfWeek'], full: Optional[bool] = False) -> str:
+        """Returns a user-facing representation of this class."""
+        if value is None or value.get_days_list() == []:
+            return "-"
+        else:
+            sorted_days = sorted(value.days, key=lambda day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].index(day))
+            if full:
+                return ", ".join(sorted_days)
+            else:
+                return ", ".join(day[:3] for day in sorted_days)
+
 
 # ------------------------------------------------------------------------------------ #
 
@@ -135,6 +182,7 @@ class BackupScheduleData:
         initiation_type: BackupTriggerType, start_time: BackupStartTime,
         recurrence_type: RecurrenceType, recurrence_step_unit: RecurrenceStepUnit, recurrence_step: int,
         week_init_days: Optional[DaysOfWeek] = None,
+        backup_id: Optional[int] = None,
     ):
         # User assigned, friendly name
         self.friendly_name = friendly_name
@@ -155,6 +203,9 @@ class BackupScheduleData:
         # Specifies the days of the week for weekly recurrence
         self.weekly_init_days = week_init_days or DaysOfWeek()
 
+        # Unique identifier for the backup schedule
+        self.backup_id = backup_id
+
     def to_dict(self) -> dict:
         """Convert the backup schedule to a JSON-serializable dictionary."""
         return {
@@ -166,7 +217,8 @@ class BackupScheduleData:
             "recurrence_type": self.recurrence_type,
             "recurrence_step_unit": self.recurrence_step_unit,
             "recurrence_step": self.recurrence_step,
-            "weekly_init_days": list(self.weekly_init_days.days)
+            "weekly_init_days": list(self.weekly_init_days.days),
+            "backup_id": self.backup_id
         }
 
     @classmethod
@@ -176,15 +228,16 @@ class BackupScheduleData:
         days.add_from_iterable(data.get("weekly_init_days", []))
         
         return cls(
-            friendly_name=data["friendly_name"],
-            origin_folder=data["origin_folder"],
-            destination_folder=data["destination_folder"],
-            initiation_type=data["initiation_type"],
-            start_time=BackupStartTime(data["start_time"]),
-            recurrence_type=data["recurrence_type"],
-            recurrence_step_unit=data["recurrence_step_unit"],
-            recurrence_step=data["recurrence_step"],
-            week_init_days=days
+            friendly_name = data["friendly_name"],
+            origin_folder = data["origin_folder"],
+            destination_folder = data["destination_folder"],
+            initiation_type = data["initiation_type"],
+            start_time = BackupStartTime(data["start_time"]),
+            recurrence_type = data["recurrence_type"],
+            recurrence_step_unit = data["recurrence_step_unit"],
+            recurrence_step = data["recurrence_step"],
+            week_init_days = days,
+            backup_id = data["backup_id"]
         )
 
     def __repr__(self):
@@ -198,7 +251,100 @@ class BackupScheduleData:
             f"    recurrence_step_unit={repr(self.recurrence_step_unit)},\n"
             f"    recurrence_step={self.recurrence_step},\n"
             f"    weekly_init_days={repr(self.weekly_init_days)}\n"
+            f"    backup_id={self.backup_id}\n"
             f")"
         )
-        
+
 # ------------------------------------------------------------------------------------ #
+
+class ScheduleData:
+    """Stores configuration data for a schedule, not to be confused with BackupScheduleData."""
+
+    def __init__(
+        self,
+        initiation_type: Optional[BackupTriggerType] = None,
+        start_time: Optional[BackupStartTime] = None,
+        recurrence_type: Optional[RecurrenceType] = None,
+        recurrence_step_unit: Optional[RecurrenceStepUnit] = None,
+        recurrence_step: Optional[int] = None,
+        week_init_days: Optional[DaysOfWeek] = None,
+    ):
+        self.initiation_type = initiation_type
+        self.start_time = start_time or BackupStartTime()
+        self.recurrence_type = recurrence_type
+        self.recurrence_step_unit = recurrence_step_unit
+        self.recurrence_step = recurrence_step
+        self.week_init_days = week_init_days or DaysOfWeek()
+
+    def to_dict(self) -> dict:
+        """Convert the schedule data to a JSON-serializable dictionary."""
+        return {
+            "initiation_type": self.initiation_type,
+            "start_time": self.start_time.get_unix_time(),
+            "recurrence_type": self.recurrence_type,
+            "recurrence_step_unit": self.recurrence_step_unit,
+            "recurrence_step": self.recurrence_step,
+            "week_init_days": list(self.week_init_days.days),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'ScheduleData':
+        """Create a ScheduleData instance from a dictionary."""
+        days = DaysOfWeek()
+        days.add_from_iterable(data.get("week_init_days", []))
+        
+        return cls(
+            initiation_type = data.get("initiation_type"),
+            start_time = BackupStartTime(data.get("start_time")),
+            recurrence_type = data.get("recurrence_type"),
+            recurrence_step_unit = data.get("recurrence_step_unit"),
+            recurrence_step = data.get("recurrence_step"),
+            week_init_days = days,
+        )
+
+    def __repr__(self):
+        return (
+            f"ScheduleData(\n"
+            f"    initiation_type={repr(self.initiation_type)},\n"
+            f"    start_time={repr(self.start_time)},\n"
+            f"    recurrence_type={repr(self.recurrence_type)},\n"
+            f"    recurrence_step_unit={repr(self.recurrence_step_unit)},\n"
+            f"    recurrence_step={self.recurrence_step},\n"
+            f"    week_init_days={repr(self.week_init_days)}\n"
+            f")"
+        )
+
+# ------------------------------------------------------------------------------------ #
+
+def remove_backup_data(backup_id: int):
+    """Removes a backup schedule data file."""
+    try:
+        file_path = find_file_path(f"backup{backup_id}", StorageFolder.BACKUPS)
+
+        if file_path and os.path.exists(file_path):
+            os.remove(file_path)
+            return True
+        return False
+    
+    except Exception as e:
+        error(
+            f"Error removing backup data for ID: {backup_id}, maybe you've already removed it?\n\n{e}",
+              "remove_backup_data Error"
+        )
+
+def find_backup_data(backup_id: int) -> BackupScheduleData:
+    """Finds and returns a backup schedule data file."""
+    try:
+        file_path = find_file_path(f"backup_{backup_id}", StorageFolder.BACKUPS)
+
+        if not os.path.exists(file_path):
+            error(f"Backup data for ID: {backup_id} does not exist.", "find_backup_data Error")
+            return None
+
+        with open(file_path, 'r', encoding='utf-8') as f:
+            backup_data = json.load(f)
+            return BackupScheduleData.from_dict(backup_data)
+    
+    except Exception as e:
+        error(f"Error fetching backup data for ID: {backup_id}.\n\n{e}", "find_backup_data Error")
+        return None

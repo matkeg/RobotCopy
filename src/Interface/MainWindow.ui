@@ -1256,7 +1256,7 @@ background: transparent;</string>
                   <bool>false</bool>
                  </property>
                  <property name="dragDropMode">
-                  <enum>QAbstractItemView::NoDragDrop</enum>
+                  <enum>QAbstractItemView::DragOnly</enum>
                  </property>
                  <property name="defaultDropAction">
                   <enum>Qt::IgnoreAction</enum>
@@ -1365,7 +1365,7 @@ background: transparent;</string>
                   <bool>false</bool>
                  </property>
                  <property name="dragDropMode">
-                  <enum>QAbstractItemView::NoDragDrop</enum>
+                  <enum>QAbstractItemView::DragOnly</enum>
                  </property>
                  <property name="defaultDropAction">
                   <enum>Qt::IgnoreAction</enum>
@@ -1443,6 +1443,15 @@ background: transparent;</string>
                   <property name="icon">
                    <iconset resource="assets.qrc">
                     <normaloff>:/sources/Icons/Compress.ico</normaloff>:/sources/Icons/Compress.ico</iconset>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Remove Backup Schedule</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="assets.qrc">
+                    <normaloff>:/sources/Icons/Trash.ico</normaloff>:/sources/Icons/Trash.ico</iconset>
                   </property>
                  </item>
                 </widget>

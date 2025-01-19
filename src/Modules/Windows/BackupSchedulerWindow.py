@@ -18,7 +18,7 @@ class BackupSchedulerWindow(QMainWindow):
     # --- CROSS WINDOW BRIDGE ----------------- #
     scheduleTransmission = pyqtSignal(dict)
     
-    def __init__(self, existingData: Optional[BackupScheduleData] = None):
+    def __init__(self, existingData: Optional[ScheduleData] = None):
         super().__init__()
         # Load the .ui file
         loadUi(
@@ -26,7 +26,6 @@ class BackupSchedulerWindow(QMainWindow):
             "src/Interface/BackupScheduler.ui",
             True, self    
         )
-
 
         # --- DIALOG ACTIONS ---------------------- #
         def handleDialogButtons(button):
@@ -83,48 +82,55 @@ class BackupSchedulerWindow(QMainWindow):
         self.onRecurrenceTypeChange(self.recurrenceTypeCombo.currentIndex())
         self.onRecurrenceUnitChange(self.recurrenceStepUnitCombo.currentIndex())
 
+        # Set the existing data if it exists.
+        self.setExistingData(existingData)
+
     # --------------------------------------------- #
 
-    def setExistingData(self, existingData: Optional[BackupScheduleData] = None):
+    def setExistingData(self, existingData: Optional[ScheduleData] = None):
+        if existingData is None:
+            return
+
         # Initiation Type Combobox
-        self.initiationTypeCombo.setCurrentIndex(
-            getattr(existingData, "initiation_type", 0)
-        )
+        initiation_type = getattr(existingData, 'initiation_type', None)
+        if initiation_type is not None:
+            self.initiationTypeCombo.setCurrentIndex(initiation_type)
 
         # Starting Time
-        startingTime = getattr(existingData, "start_time", 0)
-        if startingTime != 0:
-            self.timeNowCheck.setChecked(False)
-            self.dateTimeEdit.setDateTime = QDateTime.fromSecsSinceEpoch(startingTime)
-        else:
-            self.timeNowCheck.setChecked(True)
+        start_time = getattr(existingData, 'start_time', None)
+        if start_time is not None:
+            startingTime = start_time.get_unix_time()
+            if startingTime != 0:
+                self.timeNowCheck.setChecked(False)
+                self.dateTimeEdit.setDateTime(QDateTime.fromSecsSinceEpoch(startingTime))
+            else:
+                self.timeNowCheck.setChecked(True)
 
         # Recurrence Type Combobox
-        self.recurrenceTypeCombo.setCurrentIndex(
-            getattr(existingData, "recurrence_type", 0)
-        )
+        recurrence_type = getattr(existingData, 'recurrence_type', None)
+        if recurrence_type is not None:
+            self.recurrenceTypeCombo.setCurrentIndex(recurrence_type)
 
         # Recurrence Step (Ex. HOW MANY Days, HOW MANY Weeks) Input
-        self.recurrenceStepInput.setValue(
-            getattr(existingData, "recurrence_step", 0)
-        )
+        recurrence_step = getattr(existingData, 'recurrence_step', None)
+        if recurrence_step is not None:
+            self.recurrenceStepInput.setValue(recurrence_step)
 
         # Recurrence Step UNIT (Ex. DAYS, WEEKS) Combobox
-        self.recurrenceStepUnitCombo.setCurrentIndex(
-            getattr(existingData, "recurrence_step_unit", 0)
-        )
+        recurrence_step_unit = getattr(existingData, 'recurrence_step_unit', None)
+        if recurrence_step_unit is not None:
+            self.recurrenceStepUnitCombo.setCurrentIndex(recurrence_step_unit)
 
         # Weekdays Selection Checkboxes
-        selected_days = getattr(existingData, "weekly_init_days", DaysOfWeek())
-        self.mondayChoice.setChecked(selected_days.__contains__("Monday"))
-        self.tuesdayChoice.setChecked(selected_days.__contains__("Tuesday"))
-        self.wednesdayChoice.setChecked(selected_days.__contains__("Wednesday"))
-        self.thursdayChoice.setChecked(selected_days.__contains__("Thursday"))
-        self.fridayChoice.setChecked(selected_days.__contains__("Friday"))
-        self.saturdayChoice.setChecked(selected_days.__contains__("Saturday"))
-        self.sundayChoice.setChecked(selected_days.__contains__("Sunday"))
-
-        # That's it! Finally.
+        week_init_days = getattr(existingData, 'week_init_days', None)
+        if week_init_days is not None:
+            self.mondayChoice.setChecked("Monday" in week_init_days)
+            self.tuesdayChoice.setChecked("Tuesday" in week_init_days)
+            self.wednesdayChoice.setChecked("Wednesday" in week_init_days)
+            self.thursdayChoice.setChecked("Thursday" in week_init_days)
+            self.fridayChoice.setChecked("Friday" in week_init_days)
+            self.saturdayChoice.setChecked("Saturday" in week_init_days)
+            self.sundayChoice.setChecked("Sunday" in week_init_days)
         
 
     def onInitiationChange(self, index: int):
@@ -208,4 +214,4 @@ class BackupSchedulerWindow(QMainWindow):
 
             "week_init_days": selected_weekdays
         }
-        
+

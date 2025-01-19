@@ -279,8 +279,8 @@ background: transparent;</string>
           <item>
            <widget class="QWidget" name="SourcesGroup" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>3</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
@@ -883,8 +883,8 @@ background: transparent;</string>
           <item>
            <widget class="QGroupBox" name="TriggerGroup">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>2</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
@@ -893,7 +893,7 @@ background: transparent;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QTreeWidget" name="CurrentTriggerInfoTree">
+              <widget class="QTreeWidget" name="triggerInfoTree">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -951,12 +951,12 @@ background: transparent;</string>
                  <string>Initiation</string>
                 </property>
                 <property name="text">
-                 <string>Never</string>
+                 <string>NEVER</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Starting on</string>
+                 <string>Starting On</string>
                 </property>
                 <property name="text">
                  <string>ASAP</string>
@@ -972,7 +972,7 @@ background: transparent;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>On days</string>
+                 <string>On Days</string>
                 </property>
                 <property name="text">
                  <string>-</string>

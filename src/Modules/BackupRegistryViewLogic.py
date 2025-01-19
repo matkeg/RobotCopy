@@ -56,12 +56,13 @@ def populateBackupRegistryView(mainWindow: QMainWindow, treeWidget: QTreeWidget)
     """
     Populates the Backup Registry View by fetching and displaying backup data in a separate thread.
     """
+    
     # Start updating the backup registry view by firstly clearing the treeWidget.
     treeWidget.clear()
 
     def handleItemSelection():
         selectedItems = treeWidget.selectedItems()
-        selectedItem: QTreeWidgetItem = selectedItems[0] if selectedItems else None
+        selectedItem = selectedItems[0] if selectedItems else None
         if selectedItem is None:
             return
         
