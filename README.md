@@ -3,44 +3,45 @@ A college project written in Python which handles folder backups using the Windo
 
 ## Uses
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio">
+  <img src="https://skillicons.dev/icons?i=qt,py,visualstudio" alt="Tech stack: Qt, Python, Visual Studio">
 </p>
 
+## Requirements
 
-## Requirements - For Development
+To run this program, you need a Windows operating system that supports the **robocopy** command (Windows Vista or later).
+
+For development purposes, additional requirements depend on the specific aspect of the program:
 
 ### User Interface
-Microsoft C++ Build Tools > Desktop development with C++[^1], Qt Designer, PyQt5
+- **Microsoft C++ Build Tools**: Desktop development with C++[^1]
+- **Qt Designer**
+- **PyQt5**
+
 [^1]: *Microsoft C++ Build Tools with the Desktop development with C++ module is required to use Qt Designer.*
->  *Qt Designer was used for UI editing, however the UI can be edited with any Text Editor by changing the `.ui` file.*
+
+> *While Qt Designer was used for UI editing, you can use any similar editor or a text editor to modify `.ui` files.*
 
 ### Backend
-Python Installation, PyQt5, psutil, pywin32
-> *Python 3.13.0 was used to create this program, older or newer versions might be incompatible with this source code.*
+- **Python** (version 3.13.0 recommended)
+- **Libraries:** PyQt5, psutil, pywin32, wmi, pyudev
 
-### Required Modules
-PyQt5, psutil, pywin32, wmi, pyudev
+> *Older or newer Python versions might be incompatible with this code.*
 
-## Requirements - Software Use
-- Windows 10 and 11, potentially down to Windows Vista.
+## Setup for Development
 
----
+To modify the program, install the required tools and dependencies listed above. It’s recommended to use Visual Studio Code for editing.
 
-## Setup - Software Use
-<strike>Either download the `.exe` from the Releases section</strike> or download the whole source as a ZIP file, extract it and run the <kbd>main.py</kbd> file.
+### Modifying the User Interface
+1. Edit the `.ui` files, preferably using Qt Designer for an efficient workflow.
+2. Update the <kbd>assets.qrc</kbd> file if new assets are added (Qt Designer does this automatically).
+3. In case you update the <kbd>assets.qrc</kbd> file, you need to compile a new <kbd>assets.py</kbd> file by running the following command in the directory containing <kbd>assets.qrc</kbd>:
 
-## Setup - Development Use
-In order to make changes to this program, make sure to download any missing software from the *Requirements - For Development* list and preferably using Visual Studio Code, open the folder.
-
-### User Interface Changes
-You can change the User Interface by changing the `.ui` file/s. Use Qt Designer for best results and easier workflow.</br>
-In order for Python to accept any new assets, you need to update the <kbd>assets.qrc</kbd> file (which Qt Designer automatically generates) and compile a new <kbd>assets.py</kbd> file.
-
-To compile a new <kbd>assets.py</kbd> file, go to the directory where the <kbd>assets.qrc</kbd> file is located using the command prompt and execute this command.
 ```
 pyrcc5 assets.qrc -o assets.py
 ```
 
-### Backend Changes
-You can change the logic of the program by modifying any `.py` file located directly under the `src` folder or <kbd>src/libraries</kbd>.</br>
-Test/debug new changes by running <kbd>src/main.py.</kbd>
+### Modifying the Backend
+1. Edit any `.py` files located in the project. Keep in mind that modifying certain files inside <kbd>src/modules</kbd> can easily cause errors in other files. Use Feature Flags inside <kbd>src/Features</kbd> to quickly change certain aspects of the program without much interuptions.
+2. Test or debug changes by running <kbd>main.py</kbd>.
+
+> *If you are using Visual Studio Code, you can start debugging from any file you've opened, thanks to the configuration in <kbd>.vscode/launch.json</kbd>. You can modify this file if you prefer different behavior.*
