@@ -45,11 +45,12 @@ def addBackupHistoryEntry(entry: BackupHistoryData) -> bool:
 
 def clearBackupHistory() -> bool:
     """Clears the backup history."""
+    displayBackupProperties(None, None, clear=True)
     return saveBackupHistory([])
 
 # ------------------------------------------------------------------------------------ #
 
-def populateBackupHistoryView(tree_widget: QTreeWidget):
+def populateBackupHistoryView(mainWindow: QMainWindow, tree_widget: QTreeWidget):
     """Populates the QTreeWidget with backup history data."""
     tree_widget.clear()
     history = loadBackupHistory()
@@ -76,27 +77,48 @@ def populateBackupHistoryView(tree_widget: QTreeWidget):
                 item.setBackground(i, QColor(255, 220, 220))  # Light red color
 
         tree_widget.addTopLevelItem(item)
+
+    count = tree_widget.topLevelItemCount()
+    if count == 1:
+        setUnsecureText(mainWindow, "historyCounter", "1 Logged Backup")
+    else:
+        setUnsecureText(mainWindow, "historyCounter", f"{count} Logged Backups")
             
 
-def displayBackupProperties(tree_widget: QTreeWidget, properties_widget: QTreeWidget):
+def displayBackupProperties(tree_widget: QTreeWidget, properties_widget: QTreeWidget, clear: bool = False):
     """Displays the properties of the selected backup history entry."""
-    selected_items = tree_widget.selectedItems()
-    if not selected_items:
-        return
-
-    selected_item = selected_items[0]
-    entry: BackupHistoryData = selected_item.data(0, 32)
-
     properties_widget.clear()
-    properties = [
-        ("Friendly Name", entry.backup_name),
-        ("Origin Path", entry.origin_folder),
-        ("Destination Path", entry.destination_folder),
-        ("Date and Time", entry.backup_time.toString('M/d/yyyy h:mm AP')),
-        ("Operation Group", BackupOperationGroup.represent(entry.operation_group)),
-        ("Operation Result", BackupOperationResult.represent(entry.operation_result))
-    ]
+
+    if clear:
+        properties = [
+            ("Friendly Name", "-"),
+            ("Origin Path", "-"),
+            ("Destination Path", "-"),
+            ("Date and Time", "-"),
+            ("Operation Group", "-"),
+            ("Operation Result", "-")
+        ]
+    else:
+        selected_items = tree_widget.selectedItems()
+        if not selected_items:
+            return
+
+        selected_item = selected_items[0]
+        entry: BackupHistoryData = selected_item.data(0, 32)
+
+        properties = [
+            ("Friendly Name", entry.backup_name),
+            ("Origin Path", entry.origin_folder),
+            ("Destination Path", entry.destination_folder),
+            ("Date and Time", entry.backup_time.toString('M/d/yyyy h:mm AP')),
+            ("Operation Group", BackupOperationGroup.represent(entry.operation_group)),
+            ("Operation Result", BackupOperationResult.represent(entry.operation_result))
+        ]
 
     for prop, value in properties:
         prop_item = QTreeWidgetItem([prop, value])
         properties_widget.addTopLevelItem(prop_item)
+
+def onHistoryItemClicked(tree_widget: QTreeWidget, properties_widget: QTreeWidget):
+    """Handles the history item click event and displays the properties."""
+    tree_widget.itemSelectionChanged.connect(lambda: displayBackupProperties(tree_widget, properties_widget))

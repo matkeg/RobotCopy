@@ -55,12 +55,10 @@ class MainWindow(QMainWindow):
         self.history_tree: QTreeWidget = findObject(self, "BackupHistoryTree")
         self.history_properties_tree: QTreeWidget = findObject(self, "BackupHistoryPropertiesTree")
 
-        self.history_tree.setColumnCount(6)
-        self.history_tree.setHeaderLabels(["Name", "At", "From", "To", "Group", "Result"])
-        self.history_tree.itemSelectionChanged.connect(self.on_history_item_clicked)
-
         self.clearHistoryBtn = findObject(self, "clearHistoryButton")
         self.clearHistoryBtn.clicked.connect(self.on_history_clear)
+
+        self.historyCounter = findObject(self, "historyCounter")
 
         # Set-up the backup registry view, button logic.
         self.actionsBackups: QListWidget = findObject(self, "actionsBackups")
@@ -94,7 +92,8 @@ class MainWindow(QMainWindow):
     def refreshViews(self):
         populateDriveView(self, self.drive_tree)
         populateBackupRegistryView(self, self.backup_tree)
-        populateBackupHistoryView(self.history_tree)
+        populateBackupHistoryView(self, self.history_tree)
+
 
     # Prompt windows
     def showAbout(self):
@@ -207,7 +206,7 @@ class MainWindow(QMainWindow):
             self.actionsSelection.setEnabled(False)
 
     def on_history_item_clicked(self):
-        displayBackupProperties(self.history_tree, self.history_properties_tree)
+        onHistoryItemClicked(self.history_tree, self.history_properties_tree)
 
     def on_history_clear(self):
         result = ask(
@@ -218,7 +217,7 @@ class MainWindow(QMainWindow):
         
         if result:
             clearBackupHistory()
-            populateBackupHistoryView(self.history_tree)
+            populateBackupHistoryView(self, self.history_tree)
 
 # ------------------------------------------------------------------------------------ #
 
