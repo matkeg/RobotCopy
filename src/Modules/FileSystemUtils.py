@@ -282,3 +282,28 @@ def getFolderData(input: QLineEdit | str, accessType: Optional[AccessType] = Acc
         number_of_files=str(initial_stats.file_count),
         number_of_folders=str(initial_stats.folder_count)
     )
+
+# ------------------------------------------------------------------------------------ #
+
+def get_last_two_subfolders(path: str) -> str:
+    """
+    Returns a shortened version of the path, showing only the last two subfolders.
+    Example: "C:/Windows/System/Folder1/Folder2" -> "C:/.../Folder1/Folder2"
+    """
+    # Normalize the path
+    normalized_path = os.path.normpath(path)
+    
+    # Split the path into components
+    path_components = normalized_path.split(os.sep)
+    
+    # If the path has fewer than three components, return it as is
+    if len(path_components) < 3:
+        return normalized_path
+    
+    # Join the last two components with the rest of the path
+    shortened_path = os.path.join("...", *path_components[-2:])
+    
+    # Ensure the drive's slash doesn't get cut off
+    drive = path_components[0] + os.sep if os.path.splitdrive(path_components[0])[0] else path_components[0]
+    
+    return os.path.join(drive, shortened_path)

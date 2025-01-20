@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1088</width>
-    <height>668</height>
+    <width>1063</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -239,169 +239,6 @@ background: transparent;</string>
        <property name="bottomMargin">
         <number>6</number>
        </property>
-       <item row="3" column="0">
-        <widget class="QFrame" name="infoLabel">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-    border: 1px solid rgb(6, 129, 215);
-    background-color:rgba(20, 147, 222, 50);
-    color: black;
-    border-radius: 4px;
-    padding: 4px;
-}
-
-QLabel {
-    border: none;
-    background-color: transparent;
-}</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item alignment="Qt::AlignTop">
-           <widget class="QLabel" name="infoIcon">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>36</width>
-              <height>36</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>36</width>
-              <height>36</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: transparent;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="assets.qrc">:/sources/Icons/Prompts/Info.ico</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="infoText">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="mouseTracking">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: transparent;</string>
-            </property>
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Sample information text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="infoCloseButton">
-            <property name="minimumSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: transparent;
-    border: none;
-	color: rgb(6, 129, 215);
-    font: bold 9px;
-	border-radius: 4px;
-}
-
-QPushButton:hover {
-   background-color:rgba(6, 129, 215, 30); 
-}
-
-QPushButton:pressed {
-    background-color:rgba(6, 129, 215, 80); 
-}
-</string>
-            </property>
-            <property name="text">
-             <string>X</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-         <zorder>infoText</zorder>
-         <zorder>infoIcon</zorder>
-         <zorder>infoCloseButton</zorder>
-        </widget>
-       </item>
        <item row="5" column="0">
         <widget class="QFrame" name="statusLabel">
          <property name="enabled">
@@ -505,168 +342,6 @@ QPushButton:hover {
 
 QPushButton:pressed {
     background-color:rgba(200, 200, 200, 80); 
-}
-</string>
-            </property>
-            <property name="text">
-             <string>X</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QFrame" name="warningLabel">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QWidget {
-    border: 1px solid rgb(234, 132, 60);
-    background-color:rgba(255, 167, 26, 50);
-    color: black;
-    border-radius: 4px;
-    padding: 4px;
-}
-
-QLabel {
-    border: none;
-    background-color: transparent;
-}
-
-QPushButton {
-    border: none;
-    background-color: transparent;
-}</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item alignment="Qt::AlignTop">
-           <widget class="QLabel" name="warningIcon">
-            <property name="minimumSize">
-             <size>
-              <width>36</width>
-              <height>36</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>36</width>
-              <height>36</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: transparent;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="assets.qrc">:/sources/Icons/Prompts/Warning.ico</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="warningText">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="mouseTracking">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: transparent;</string>
-            </property>
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sample warning text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="warningCloseButton">
-            <property name="minimumSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: transparent;
-    border: none;
-	color: rgb(234, 132, 60);
-    font: bold 9px;
-	border-radius: 4px;
-}
-
-QPushButton:hover {
-   background-color:rgba(234, 132, 60, 30); 
-}
-
-QPushButton:pressed {
-    background-color:rgba(234, 132, 60, 80); 
 }
 </string>
             </property>
@@ -1414,7 +1089,7 @@ background: transparent;</string>
                    <string>Trigger Backup</string>
                   </property>
                   <property name="toolTip">
-                   <string>Opens the backup registration page.</string>
+                   <string>Triggers the backup operation.</string>
                   </property>
                   <property name="icon">
                    <iconset resource="assets.qrc">
@@ -1426,7 +1101,7 @@ background: transparent;</string>
                    <string>Edit Backup Schedule</string>
                   </property>
                   <property name="toolTip">
-                   <string>Opens the backup setup page, where after submitting, a single backup will be initiated without scheduling a recurring backup.</string>
+                   <string>Opens the backup edit page.</string>
                   </property>
                   <property name="icon">
                    <iconset resource="assets.qrc">
@@ -1448,6 +1123,9 @@ background: transparent;</string>
                  <item>
                   <property name="text">
                    <string>Remove Backup Schedule</string>
+                  </property>
+                  <property name="toolTip">
+                   <string>Removes the backup from the registry.</string>
                   </property>
                   <property name="icon">
                    <iconset resource="assets.qrc">
@@ -1554,7 +1232,7 @@ background: transparent;</string>
                  <string>From</string>
                 </property>
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The location of the backed up file/folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>The location of the backed up folder.</string>
                 </property>
                </column>
                <column>
@@ -1562,7 +1240,7 @@ background: transparent;</string>
                  <string>To</string>
                 </property>
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The destination location where the files will be backed up to.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>The destination location where the files will be backed up to.</string>
                 </property>
                </column>
                <column>
@@ -1570,7 +1248,7 @@ background: transparent;</string>
                  <string>Trigger</string>
                 </property>
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The trigger that initiates the backup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>The trigger type that initiates the backup.</string>
                 </property>
                </column>
                <column>
@@ -1578,7 +1256,7 @@ background: transparent;</string>
                  <string>Last Backup</string>
                 </property>
                 <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The last time the backup opertaion was initiated.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>The last time the backup opertaion was initiated.</string>
                 </property>
                </column>
                <item>
@@ -1932,7 +1610,7 @@ background: transparent;</string>
                <string>From</string>
               </property>
               <property name="toolTip">
-               <string>The folder where the files were backed up from.</string>
+               <string>The shortened path where the files were backed up from.</string>
               </property>
              </column>
              <column>
@@ -1940,7 +1618,7 @@ background: transparent;</string>
                <string>To</string>
               </property>
               <property name="toolTip">
-               <string>The folder where the files were backed up to.</string>
+               <string>The shortened path where the files were backed up to.</string>
               </property>
              </column>
              <column>
@@ -2043,6 +1721,14 @@ background: transparent;</string>
              </item>
              <item>
               <property name="text">
+               <string>Operation Result</string>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>Operation Group</string>
               </property>
               <property name="text">
@@ -2065,6 +1751,59 @@ background: transparent;</string>
                <string>-</string>
               </property>
              </item>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignRight">
+            <widget class="QWidget" name="widget" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>4</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>4</number>
+              </property>
+              <item alignment="Qt::AlignRight">
+               <widget class="QPushButton" name="clearHistoryButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Clear History</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="assets.qrc">
+                  <normaloff>:/sources/Icons/Trash.ico</normaloff>:/sources/Icons/Trash.ico</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>16</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
@@ -2196,6 +1935,331 @@ QPushButton:hover {
 
 QPushButton:pressed {
     background-color:rgba(217, 62, 3, 80); 
+}
+</string>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QFrame" name="infoLabel">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget {
+    border: 1px solid rgb(6, 129, 215);
+    background-color:rgba(20, 147, 222, 50);
+    color: black;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+QLabel {
+    border: none;
+    background-color: transparent;
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignTop">
+           <widget class="QLabel" name="infoIcon">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: transparent;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="assets.qrc">:/sources/Icons/Prompts/Info.ico</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="infoText">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: transparent;</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Sample information text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="infoCloseButton">
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+	color: rgb(6, 129, 215);
+    font: bold 9px;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+   background-color:rgba(6, 129, 215, 30); 
+}
+
+QPushButton:pressed {
+    background-color:rgba(6, 129, 215, 80); 
+}
+</string>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>infoText</zorder>
+         <zorder>infoIcon</zorder>
+         <zorder>infoCloseButton</zorder>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="warningLabel">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget {
+    border: 1px solid rgb(234, 132, 60);
+    background-color:rgba(255, 167, 26, 50);
+    color: black;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+QLabel {
+    border: none;
+    background-color: transparent;
+}
+
+QPushButton {
+    border: none;
+    background-color: transparent;
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignTop">
+           <widget class="QLabel" name="warningIcon">
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: transparent;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="assets.qrc">:/sources/Icons/Prompts/Warning.ico</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="warningText">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background: transparent;</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sample warning text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="warningCloseButton">
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+	color: rgb(234, 132, 60);
+    font: bold 9px;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+   background-color:rgba(234, 132, 60, 30); 
+}
+
+QPushButton:pressed {
+    background-color:rgba(234, 132, 60, 80); 
 }
 </string>
             </property>

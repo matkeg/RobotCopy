@@ -21,6 +21,7 @@ from src.Modules.Windows.BackupSetupWindow import BackupSetupWindow, BackupSetup
 from src.Interface.Classes.QClickTreeWidget import QClickTreeWidget
 
 from src.Modules.BackupLogic import *
+from src.Modules.BackupHistoryViewLogic import *
 
 # ------------------------------------------------------------------------------------ #
 
@@ -50,6 +51,16 @@ class MainWindow(QMainWindow):
         self.backup_tree: QTreeWidget = findObject(self, "BackupsTree")
         
         self.backup_tree.itemSelectionChanged.connect(self.handle_backup_selection)
+
+        self.history_tree: QTreeWidget = findObject(self, "BackupHistoryTree")
+        self.history_properties_tree: QTreeWidget = findObject(self, "BackupHistoryPropertiesTree")
+
+        self.history_tree.setColumnCount(6)
+        self.history_tree.setHeaderLabels(["Name", "At", "From", "To", "Group", "Result"])
+        self.history_tree.itemSelectionChanged.connect(self.on_history_item_clicked)
+
+        self.clearHistoryBtn = findObject(self, "clearHistoryButton")
+        self.clearHistoryBtn.clicked.connect(self.on_history_clear)
 
         # Set-up the backup registry view, button logic.
         self.actionsBackups: QListWidget = findObject(self, "actionsBackups")
@@ -83,6 +94,7 @@ class MainWindow(QMainWindow):
     def refreshViews(self):
         populateDriveView(self, self.drive_tree)
         populateBackupRegistryView(self, self.backup_tree)
+        populateBackupHistoryView(self.history_tree)
 
     # Prompt windows
     def showAbout(self):
@@ -181,6 +193,7 @@ class MainWindow(QMainWindow):
     def on_tab_double_clicked(self):
         self.resize_tree_columns(self.drive_tree)
         self.resize_tree_columns(self.backup_tree)
+        self.resize_tree_columns(self.history_tree)
 
     def resize_tree_columns(self, tree_widget):
         for column in range(tree_widget.columnCount()):
@@ -193,6 +206,20 @@ class MainWindow(QMainWindow):
         else:
             self.actionsSelection.setEnabled(False)
 
+    def on_history_item_clicked(self):
+        displayBackupProperties(self.history_tree, self.history_properties_tree)
+
+    def on_history_clear(self):
+        result = ask(
+            "Are you sure you want to permanently delete the backup history? This action cannot be undone.",
+            "Clear Backup History", 
+            AskAnswer.YES_NO
+        )
+        
+        if result:
+            clearBackupHistory()
+            populateBackupHistoryView(self.history_tree)
+
 # ------------------------------------------------------------------------------------ #
 
 if __name__ == "__main__":
@@ -200,4 +227,57 @@ if __name__ == "__main__":
     app.setStyle("Fusion")
     mainWindow = MainWindow()
     
+    # HARDCODED DATA FOR TEMPORARY TESTING
+    saveBackupHistory([
+        BackupHistoryData(
+            backup_id=5,
+            backup_name="Backup Test - Success",
+            origin_folder="C:/Users/Pictures",
+            destination_folder="D:/Backups/Photos",
+            backup_time=QDateTime.currentDateTime(),
+            operation_group=BackupOperationGroup.LOGON,
+            operation_result=BackupOperationResult.SUCCESS,
+        ),
+
+        BackupHistoryData(
+            backup_id=8,
+            backup_name="One-time Backup",
+            origin_folder="C:/Users/Documents",
+            destination_folder="D:/Backups/",
+            backup_time=QDateTime.currentDateTime(),
+            operation_group=BackupOperationGroup.STARTUP,
+            operation_result=BackupOperationResult.SUCCESS,
+        ),
+
+        BackupHistoryData(
+            backup_id=9,
+            backup_name="One-time Backup",
+            origin_folder="C:/Users/Templates",
+            destination_folder="D:/Testing/Templates",
+            backup_time=QDateTime.currentDateTime(),
+            operation_group=BackupOperationGroup.STARTUP,
+            operation_result=BackupOperationResult.SUCCESS,
+        ),
+
+        BackupHistoryData(
+            backup_id=11,
+            backup_name="Backup Test - Fail",
+            origin_folder="C:/Users/Documents",
+            destination_folder="D:/Testing/Backups/",
+            backup_time=QDateTime.currentDateTime(),
+            operation_group=BackupOperationGroup.STARTUP,
+            operation_result=BackupOperationResult.ILLEGAL_PARAMS,
+        ),
+
+        BackupHistoryData(
+            backup_id=99,
+            backup_name="One-time Backup",
+            origin_folder="D:/Programs/Tester",
+            destination_folder="X:/Backups/Testing",
+            backup_time=QDateTime.currentDateTime(),
+            operation_group=BackupOperationGroup.STARTUP,
+            operation_result=BackupOperationResult.DESTINATION_LOCATION_NOT_FOUND,
+        ),
+    ])
+
     app.exec_()

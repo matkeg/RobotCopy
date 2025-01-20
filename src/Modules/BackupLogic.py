@@ -169,7 +169,6 @@ class DaysOfWeek:
             else:
                 return ", ".join(day[:3] for day in sorted_days)
 
-
 # ------------------------------------------------------------------------------------ #
 
 class BackupScheduleData:
@@ -188,8 +187,8 @@ class BackupScheduleData:
         self.friendly_name = friendly_name
 
         # Describes the origin and destination folders
-        self.origin_folder = origin_folder
-        self.destination_folder = destination_folder
+        self.origin_folder = os.path.normpath(origin_folder)
+        self.destination_folder = os.path.normpath(destination_folder)
 
         # Describes how and when the backup is initiated
         self.initiation_type = initiation_type
@@ -313,6 +312,120 @@ class ScheduleData:
             f"    week_init_days={repr(self.week_init_days)}\n"
             f")"
         )
+
+# --- BACKUP HISTORY ----------------------------------------------------------------- #
+
+# Multiple backups can be grouped together based on their initiation type,
+# such as startup, logon, or alone (scheduled), in order to perform multiple
+# registered backups at once. Operation Group coresponds in what group the backup
+# was initiated in.
+class BackupOperationGroup:
+    UNKNOWN = 0
+    STARTUP = 1
+    LOGON = 2
+    ALONE = 3
+
+    @staticmethod
+    def represent(value) -> str:
+        values = {
+            0: "Unknown",
+            1: "Startup Group",
+            2: "Logon Group",
+            3: "No Group"
+        }
+        return values.get(value, "-")
+
+# Indicates the result of a backup operation, and can be used to provide
+# the user with a general idea of why the backup failed.
+class BackupOperationResult:
+    # Origin folder wasn't available at the time of the backup.
+    ORIGIN_LOCATION_NOT_FOUND = 0
+
+    # Destination folder wasn't available at the time of the backup.
+    DESTINATION_LOCATION_NOT_FOUND = 1
+
+    # Origin and destination folders are subdirectories of each other.
+    TARGETS_ARE_SUBDIRECTORIES = 2
+
+    # Origin and destination folders are the same.
+    TARGETS_SAME_FOLDER = 3
+
+    # Backup's setup parameters are invalid.
+    ILLEGAL_PARAMS = 4
+
+    # Backup was canceled by the user.
+    INTERRUPTED = 5
+    
+    # Backup was successful.
+    SUCCESS = 6
+
+    # Backup was canceled by the user.
+    OTHER = 7
+
+    @staticmethod
+    def represent(value: int, code_only: Optional[bool] = False) -> str:
+        values = {
+            0: "ERR0: Origin folder wasn't available",
+            1: "ERR1: Destination folder wasn't available",
+            2: "ERR2: Illegal target relationship (Subdirectories)",
+            3: "ERR3: Illegal target relationship (Same folder)",
+            4: "ERR4: Illegal parameters",
+            5: "ERR5: Backup canceled by user",
+            6: "SCS0: Backup successful",
+            7: "ERR6: Unkrnown Error"
+        }
+        result = values.get(value, "-")
+        return result[:4] if code_only else result[6:]
+
+# ------------------------------------------------------------------------------------ #
+
+class BackupHistoryData:
+    """Stores data about a backup event."""
+
+    def __init__(
+        self,
+        backup_id: int,
+        backup_name: str,
+        origin_folder: str,
+        destination_folder: str,
+        backup_time: QDateTime,
+        operation_group: BackupOperationGroup,
+        operation_result: BackupOperationResult,
+
+    ):
+        self.backup_id = backup_id
+        self.backup_name = backup_name
+        self.origin_folder = origin_folder
+        self.destination_folder = destination_folder
+        self.backup_time = backup_time
+        self.operation_group = operation_group
+        self.operation_result = operation_result
+
+    def to_dict(self) -> dict:
+        """Convert the backup history data to a JSON-serializable dictionary."""
+        return {
+            "backup_id": self.backup_id,
+            "backup_name": self.backup_name,
+            "origin_folder": self.origin_folder,
+            "destination_folder": self.destination_folder,
+            "backup_time": self.backup_time.toSecsSinceEpoch(),
+            "operation_group": self.operation_group,
+            "operation_result": self.operation_result
+        }
+    
+    @classmethod
+    def from_dict(cls, data: dict) -> 'BackupHistoryData':
+        """Create a BackupHistoryData instance from a dictionary."""
+        return cls(
+            backup_id = data["backup_id"],
+            backup_name = data["backup_name"],
+            origin_folder = data["origin_folder"],
+            destination_folder = data["destination_folder"],
+            backup_time = QDateTime.fromSecsSinceEpoch(data["backup_time"]),
+            operation_group = data["operation_group"],
+            operation_result = data["operation_result"]
+        )
+
 
 # ------------------------------------------------------------------------------------ #
 

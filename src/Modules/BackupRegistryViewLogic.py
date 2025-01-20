@@ -118,8 +118,8 @@ def populateBackupRegistryView(mainWindow: QMainWindow, treeWidget: QTreeWidget)
                 treeWidget, 
                 [
                     entry.friendly_name, 
-                    entry.origin_folder, 
-                    entry.destination_folder, 
+                    get_last_two_subfolders(entry.origin_folder), 
+                    get_last_two_subfolders(entry.destination_folder), 
                     initiation_at]
             )
             newTreeEntry.setData(0, 32, entry)
