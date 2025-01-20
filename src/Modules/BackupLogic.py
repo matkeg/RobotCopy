@@ -329,9 +329,9 @@ class BackupOperationGroup:
     def represent(value) -> str:
         values = {
             0: "Unknown",
-            1: "Startup Group",
-            2: "Logon Group",
-            3: "No Group"
+            1: "Startup",
+            2: "Logon",
+            3: "No"
         }
         return values.get(value, "-")
 

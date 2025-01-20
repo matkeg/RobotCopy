@@ -89,11 +89,11 @@ def displayBackupProperties(tree_widget: QTreeWidget, properties_widget: QTreeWi
 
     properties_widget.clear()
     properties = [
-        ("User Assigned Name", entry.backup_name),
-        ("Origin Location", entry.origin_folder),
-        ("Operation Group", BackupOperationGroup.represent(entry.operation_group)),
-        ("Destination Location", entry.destination_folder),
+        ("Friendly Name", entry.backup_name),
+        ("Origin Path", entry.origin_folder),
+        ("Destination Path", entry.destination_folder),
         ("Date and Time", entry.backup_time.toString('M/d/yyyy h:mm AP')),
+        ("Operation Group", BackupOperationGroup.represent(entry.operation_group)),
         ("Operation Result", BackupOperationResult.represent(entry.operation_result))
     ]
 
