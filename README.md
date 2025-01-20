@@ -28,13 +28,13 @@ For development purposes, additional requirements depend on the specific aspect 
 
 ### Backend
 - **Python** (version 3.13.0 recommended)
-- **Libraries:** PyQt5, psutil, pywin32, wmi, pyudev
+- **Packages:** PyQt5, psutil, pywin32, wmi, pyudev
 
 > *Older or newer Python versions might be incompatible with this code.*
 
 ## Setup for Development
 
-To modify the program, install the required tools and dependencies listed above. It’s recommended to use Visual Studio Code for editing.
+To modify the program, install the required tools and packages listed above. It’s recommended to use Visual Studio Code for editing.
 
 ### Modifying the User Interface
 1. Edit the `.ui` files, preferably using Qt Designer for an efficient workflow.
