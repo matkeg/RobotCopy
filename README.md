@@ -4,7 +4,7 @@
   </p>
 </h1>
   
-A college project written in Python which handles folder backups using the Windows **robocopy** command.
+A college project written in Python which handles folder backups using the Windows **robocopy** command, currently being fully reworked for better file organization, performance, and UI.
 
 ## Uses
 <p align="left">
